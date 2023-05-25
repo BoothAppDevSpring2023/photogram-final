@@ -15,6 +15,20 @@
   </head>
 
   <body>
+    <ul>
+      <li><a href="/users">All users</a></li>
+      <li><a href="/photos">All public photos</a></li>
+      <% if @current_user.present? %>
+        <li><a href="/edit_user_profile"><%=@current_user.username%></a></li>
+        <li><a href="/user_sign_out">Sign out</a></li>
+      <% else %>
+        <li><a href="/user_sign_in">Sign in</a></li>
+        <li><a href="/user_sign_up">Sign up</a></li>
+      <% end %>
+    </ul>
+    <p style = "color: green"> <%= notice %></p>
+    <p style = "color: red"> <%= alert %></p>
     <%= yield %>
+    <p><h3>Mattia Lanzi's Final Project, AppDev Spring 2023</h3></p>
   </body>
 </html>

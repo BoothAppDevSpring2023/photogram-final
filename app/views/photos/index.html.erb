@@ -1,0 +1,73 @@
+<div>
+  <div>
+    <h1>
+      List of photos
+    </h1>
+  </div>
+</div>
+
+<% if @current_user.present? %>
+  <div>
+    <form action="/insert_photo" method="post" class="form-horizontal" enctype="multipart/form-data">
+      <input type="hidden" id="comments_count" name="query_comments_count" value="0">
+      <input type="hidden" id="likes_count" name="query_likes_count" value="0">
+      <input type="hidden" id="owner_id" name="query_owner_id" value=<%=@current_user.id%>>
+
+      <label for="image">Image</label>
+      <input type="file" id="image" name="query_image" class="form-control">
+
+      <label for="caption_box">
+        Caption
+      </label>
+      <textarea id="caption_box" name="query_caption" placeholder = "Enter a caption for the photo..."></textarea>
+
+      <button>
+        Add photo
+      </button>
+    </form>
+  </div>
+  <hr>
+<% end %>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>Image</th>
+        <th>Caption</th>
+        <th>Owner</th>
+        <th>Posted</th>
+        <th>Likes</th>
+        <th>Click to show details</th>
+      </tr>
+      <% @list_of_photos.each do |a_photo| %>
+        <% if a_photo.owner.private != true %>
+          <tr>
+            <td>
+              <img src="<%= a_photo.image %>" alt="">
+            </td>
+            <td>
+              <%= a_photo.caption %>
+            </td>
+            <td>
+              <%= a_photo.owner.username %>
+            </td>
+            <td>
+              <%= time_ago_in_words(a_photo.created_at) %> ago
+            </td>
+            <td>
+              <%= a_photo.likes_count %>
+            </td>
+            <td>
+              <a href="/photos/<%= a_photo.id %>">
+                Show details
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
